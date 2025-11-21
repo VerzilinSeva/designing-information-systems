@@ -86,14 +86,25 @@ public class Client {
 
     public static String validateContactPerson(String contactPerson) {
         if (contactPerson == null) throw new IllegalArgumentException("Контактное лицо не может быть пустым");
-        String[] words = contactPerson.trim().split("\\s+");
+
+        String trimmed = contactPerson.trim();
+        String[] words = trimmed.split("\\s+");
+
         if (words.length < 2 || words.length > 3)
             throw new IllegalArgumentException("Контактное лицо должно состоять из 2-3 слов");
+
+        StringBuilder normalized = new StringBuilder();
         for (String word : words) {
             if (!word.matches("[A-Za-zА-Яа-яЁё]{2,50}"))
                 throw new IllegalArgumentException("Каждое слово контактного лица должно содержать только буквы (2-50 символов)");
+
+            if (!word.isEmpty()) {
+                if (normalized.length() > 0) normalized.append(" ");
+                normalized.append(Character.toUpperCase(word.charAt(0)))
+                        .append(word.substring(1).toLowerCase());
+            }
         }
-        return contactPerson;
+        return normalized.toString();
     }
 
     public static String validateINN(String inn) {
@@ -125,4 +136,31 @@ public class Client {
 
     public String getOgrn() { return ogrn; }
     public void setOgrn(String ogrn) { this.ogrn = validateOGRN(ogrn); }
+
+    public String toFullString() {
+        return "Полная информация о клиенте: {" +
+                "название организации:'" + name + '\'' +
+                ", адрес:'" + address + '\'' +
+                ", телефон:'" + phone + '\'' +
+                ", контактное лицо:'" + contactPerson + '\'' +
+                ", ИНН:'" + inn + '\'' +
+                ", ОГРН:'" + ogrn + '\'' +
+                '}';
+    }
+
+    public String toShortString() {
+        return "Краткая информация о клиенте: {" +
+                "название организации:'" + name + '\'' +
+                ", контактное лицо:'" + contactPerson + '\'' +
+                ", ИНН:'" + inn + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client)) return false;
+        Client client = (Client) o;
+        return inn.equals(client.inn) && ogrn.equals(client.ogrn);
+    }
 }
