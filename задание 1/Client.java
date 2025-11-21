@@ -148,14 +148,6 @@ public class Client {
                 '}';
     }
 
-    public String toShortString() {
-        return "Краткая информация о клиенте: {" +
-                "название организации:'" + name + '\'' +
-                ", контактное лицо:'" + contactPerson + '\'' +
-                ", ИНН:'" + inn + '\'' +
-                '}';
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -163,4 +155,5 @@ public class Client {
         Client client = (Client) o;
         return inn.equals(client.inn) && ogrn.equals(client.ogrn);
     }
+
 }
