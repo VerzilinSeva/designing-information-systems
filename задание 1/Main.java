@@ -59,7 +59,6 @@ public class Main {
             Client clientData = new Client(data);
 
             System.out.println(clientData.toFullString());
-            System.out.println(clientData.toShortString());
 
             System.out.println("\nПолная информация о клиенте:");
             System.out.println("Название: " + clientData.getName());
@@ -76,9 +75,26 @@ public class Main {
 
             System.out.println(clientData1.equals(clientData2));
 
+            System.out.println("\nКороткая версия:");
+            System.out.println("Введите данные клиента");
+
+            System.out.print("Название компании: ");
+            String name1 = scanner.nextLine();
+
+            System.out.print("Контактное лицо (ФИО через пробел): ");
+            String contactPerson1 = scanner.nextLine();
+
+            System.out.print("ИНН (10 цифр): ");
+            String inn1 = scanner.nextLine();
+
+            BaseClient clientData3 = new BaseClient(name1, contactPerson1, inn1);
+
+            System.out.println(clientData3.toShortString());
+
         } catch (Exception e) {
             System.err.println("Ошибка: " + e.getMessage());
             e.printStackTrace();
+
         }
     }
 }
