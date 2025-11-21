@@ -39,7 +39,7 @@ public class BaseClient {
                 throw new IllegalArgumentException("Каждое слово контактного лица должно содержать только буквы (2-50 символов)");
 
             if (!word.isEmpty()) {
-                if (normalized.length() > 0) normalized.append(" ");
+                if (!normalized.isEmpty()) normalized.append(" ");
                 normalized.append(Character.toUpperCase(word.charAt(0)))
                         .append(word.substring(1).toLowerCase());
             }
