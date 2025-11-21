@@ -58,6 +58,9 @@ public class Main {
 
             Client clientData = new Client(data);
 
+            System.out.println(clientData.toFullString());
+            System.out.println(clientData.toShortString());
+
             System.out.println("\nПолная информация о клиенте:");
             System.out.println("Название: " + clientData.getName());
             System.out.println("Адрес: " + clientData.getAddress());
@@ -65,6 +68,13 @@ public class Main {
             System.out.println("Контактное лицо: " + clientData.getContactPerson());
             System.out.println("ИНН: " + clientData.getInn());
             System.out.println("ОГРН: " + clientData.getOgrn());
+
+            String ClientData1 = "ООО Магнит;ул. Набережная д. 55;89182234521;Михайлов Сергей Вадимович;1234567890;1234567890123";
+            Client clientData1 = new Client(ClientData1);
+            String ClientData2 = "ООО Магнит;ул. Набережная д. 55;89182234521;Михайлов Сергей Вадимович;1234567890;2234567890123";
+            Client clientData2 = new Client(ClientData2);
+
+            System.out.println(clientData1.equals(clientData2));
 
         } catch (Exception e) {
             System.err.println("Ошибка: " + e.getMessage());
