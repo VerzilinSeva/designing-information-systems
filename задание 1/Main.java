@@ -40,6 +40,32 @@ public class Main {
             System.out.println("ИНН: " + client.getInn());
             System.out.println("ОГРН: " + client.getOgrn());
 
+            System.out.println("\nJson:");
+            String filePath = "src/main/resources/MyClient.json";
+
+            Client clientJson = new Client(filePath, true);
+
+            System.out.println("\nПолная информация о клиенте:");
+            System.out.println("Название: " + clientJson.getName());
+            System.out.println("Адрес: " + clientJson.getAddress());
+            System.out.println("Телефон: " + clientJson.getPhone());
+            System.out.println("Контактное лицо: " + clientJson.getContactPerson());
+            System.out.println("ИНН: " + clientJson.getInn());
+            System.out.println("ОГРН: " + clientJson.getOgrn());
+
+            System.out.println("\nСтрока:");
+            String data = "ООО Магнит;ул. Набережная д. 55;89182234521;Михайлов Сергей Валерьевич;1234567890;1234567890123";
+
+            Client clientData = new Client(data);
+
+            System.out.println("\nПолная информация о клиенте:");
+            System.out.println("Название: " + clientData.getName());
+            System.out.println("Адрес: " + clientData.getAddress());
+            System.out.println("Телефон: " + clientData.getPhone());
+            System.out.println("Контактное лицо: " + clientData.getContactPerson());
+            System.out.println("ИНН: " + clientData.getInn());
+            System.out.println("ОГРН: " + clientData.getOgrn());
+
         } catch (Exception e) {
             System.err.println("Ошибка: " + e.getMessage());
             e.printStackTrace();
