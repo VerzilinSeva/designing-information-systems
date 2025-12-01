@@ -6,10 +6,7 @@ import java.util.List;
 
 public class ClientRepDb {
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "postgres";
-
+    private final DbConnection db = DbConnection.getInstance();
     private final List<Client> clients = new ArrayList<>();
 
     public ClientRepDb() {
@@ -22,7 +19,7 @@ public class ClientRepDb {
 
     public void readAll() throws SQLException {
         clients.clear();
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = db.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM myclients ORDER BY client_id")) {
 
@@ -62,7 +59,7 @@ public class ClientRepDb {
         String insertSql = "INSERT INTO myclients (client_id, name, address, phone, contact_person, inn, ogrn) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection conn = db.getConnection()) {
             try (PreparedStatement checkStmt = conn.prepareStatement(checkUniqueSql)) {
                 checkStmt.setString(1, client.getInn());
                 checkStmt.setString(2, client.getOgrn());
@@ -103,7 +100,7 @@ public class ClientRepDb {
         String checkUniqueSql = "SELECT COUNT(*) FROM myclients WHERE (inn = ? OR ogrn = ?) AND client_id <> ?";
         boolean found;
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection conn = db.getConnection()) {
             try (PreparedStatement checkStmt = conn.prepareStatement(checkUniqueSql)) {
                 checkStmt.setString(1, newClient.getInn());
                 checkStmt.setString(2, newClient.getOgrn());
@@ -144,7 +141,7 @@ public class ClientRepDb {
     public boolean deleteById(int id) throws SQLException {
         boolean removed;
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = db.getConnection();
              PreparedStatement ps = conn.prepareStatement("DELETE FROM myclients WHERE client_id=?")) {
 
             ps.setInt(1, id);
